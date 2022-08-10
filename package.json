@@ -1,0 +1,18 @@
+{
+  "name": "mii-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mii.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bit-buffer": "^0.2.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.21.0"
+  }
+}
