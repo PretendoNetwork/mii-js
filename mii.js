@@ -248,7 +248,7 @@ class Mii extends bitBuffer.BitStream {
 		assert.ok(this.mustacheYPosition.inRange(range(17)), `Invalid Mii mustache Y position. Got ${this.mustacheYPosition}, expected 0-16`);
 		assert.ok(this.glassesType.inRange(range(9)), `Invalid Mii glassess type. Got ${this.glassesType}, expected 0-8`);
 		assert.ok(this.glassesColor.inRange(range(6)), `Invalid Mii glassess type. Got ${this.glassesColor}, expected 0-5`);
-		assert.ok(this.glasseScale.inRange(range(8)), `Invalid Mii glassess type. Got ${this.glasseScale}, expected 0-7`);
+		assert.ok(this.glassesScale.inRange(range(8)), `Invalid Mii glassess type. Got ${this.glassesScale}, expected 0-7`);
 		assert.ok(this.glassesYPosition.inRange(range(21)), `Invalid Mii glassess Y position. Got ${this.glassesYPosition}, expected 0-20`);
 		assert.equal(typeof this.moleEnabled, 'boolean', `Invalid mole enabled flag. Got ${this.moleEnabled}, expected true or false`);
 		assert.ok(this.moleScale.inRange(range(9)), `Invalid Mii mole scale. Got ${this.moleScale}, expected 0-8`);
@@ -354,7 +354,7 @@ class Mii extends bitBuffer.BitStream {
 		this.alignByte();
 		this.glassesType = this.readBits(4);
 		this.glassesColor = this.readBits(3);
-		this.glasseScale = this.readBits(4);
+		this.glassesScale = this.readBits(4);
 		this.glassesYPosition = this.readBits(5);
 		this.moleEnabled = this.readBoolean();
 		this.moleScale = this.readBits(4);
@@ -455,7 +455,7 @@ class Mii extends bitBuffer.BitStream {
 		this.alignByte();
 		this.writeBits(this.glassesType, 4);
 		this.writeBits(this.glassesColor, 3);
-		this.writeBits(this.glasseScale, 4);
+		this.writeBits(this.glassesScale, 4);
 		this.writeBits(this.glassesYPosition, 5);
 		this.writeBoolean(this.moleEnabled);
 		this.writeBits(this.moleScale, 4);
@@ -559,7 +559,7 @@ class Mii extends bitBuffer.BitStream {
 			encodeMiiPart(0);
 		}
 
-		encodeMiiPart(this.glasseScale);
+		encodeMiiPart(this.glassesScale);
 		encodeMiiPart(this.glassesType);
 		encodeMiiPart(this.glassesYPosition);
 
