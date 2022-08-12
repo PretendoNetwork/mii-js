@@ -210,7 +210,7 @@ class Mii extends bitBuffer.BitStream {
 		assert.equal(typeof this.isValid, 'boolean', `Invalid Mii valid flag. Got ${this.isValid}, expected true or false`);
 		assert.ok(this.creationTime < 268435456, `Invalid Mii creation time. Got ${this.creationTime}, max value for 28 bit integer is 268,435,456`);
 		assert.equal(this.consoleMAC.length, 6, `Invalid Mii console MAC address size. Got ${this.consoleMAC.length}, console MAC addresses must be 6 bytes long`);
-		assert.ok(this.gender.inRange(range(1)), `Invalid Mii gender. Got ${this.gender}, expected 0 or 1`);
+		assert.ok(this.gender.inRange(range(2)), `Invalid Mii gender. Got ${this.gender}, expected 0 or 1`);
 		assert.ok(this.birthMonth.inRange(range(13)), `Invalid Mii birth month. Got ${this.birthMonth}, expected 0-12`);
 		assert.ok(this.birthDay.inRange(range(32)), `Invalid Mii birth day. Got ${this.birthDay}, expected 0-31`);
 		assert.ok(this.favoriteColor.inRange(range(12)), `Invalid Mii favorite color. Got ${this.favoriteColor}, expected 0-11`);
@@ -220,13 +220,13 @@ class Mii extends bitBuffer.BitStream {
 		assert.ok(this.build.inRange(range(128)), `Invalid Mii build. Got ${this.build}, expected 0-127`);
 		assert.equal(typeof this.disableSharing, 'boolean', `Invalid disable sharing Mii flag. Got ${this.disableSharing}, expected true or false`);
 		assert.ok(this.faceType.inRange(range(12)), `Invalid Mii face type. Got ${this.faceType}, expected 0-11`);
-		assert.ok(this.skinColor.inRange(range(6)), `Invalid Mii skin color. Got ${this.skinColor}, expected 0-6`);
+		assert.ok(this.skinColor.inRange(range(7)), `Invalid Mii skin color. Got ${this.skinColor}, expected 0-6`);
 		assert.ok(this.wrinklesType.inRange(range(12)), `Invalid Mii wrinkles type. Got ${this.wrinklesType}, expected 0-11`);
 		assert.ok(this.makeupType.inRange(range(12)), `Invalid Mii makeup type. Got ${this.makeupType}, expected 0-11`);
 		assert.ok(this.hairType.inRange(range(132)), `Invalid Mii hair type. Got ${this.hairType}, expected 0-131`);
 		assert.ok(this.hairColor.inRange(range(8)), `Invalid Mii hair color. Got ${this.hairColor}, expected 0-7`);
 		assert.equal(typeof this.flipHair, 'boolean', `Invalid flip hair flag. Got ${this.flipHair}, expected true or false`);
-		assert.ok(this.eyeType.inRange(range(50)), `Invalid Mii eye type. Got ${this.eyeType}, expected 0-59`);
+		assert.ok(this.eyeType.inRange(range(60)), `Invalid Mii eye type. Got ${this.eyeType}, expected 0-59`);
 		assert.ok(this.eyeColor.inRange(range(6)), `Invalid Mii eye color. Got ${this.eyeColor}, expected 0-5`);
 		assert.ok(this.eyeScale.inRange(range(8)), `Invalid Mii eye scale. Got ${this.eyeScale}, expected 0-7`);
 		assert.ok(this.eyeVerticalStretch.inRange(range(7)), `Invalid Mii eye vertical stretch. Got ${this.eyeVerticalStretch}, expected 0-6`);
