@@ -374,7 +374,7 @@ class Mii extends bitBuffer.BitStream {
 
 		this.validate();
 		
-		if (this.checksum !== this.CRC16XMODEM()) {
+		if (this.checksum !== this.calculateCRC()) {
 			throw new Error('Invalid Mii checksum');
 		}
 	}
@@ -470,13 +470,13 @@ class Mii extends bitBuffer.BitStream {
 		this.writeUTF16String(this.creatorName);
 		this.writeUint16(0x0); // * 0x0000 padding
 		this.swapEndian();// * Swap to big endian because thats how checksum is calculated here
-		this.writeUint16(this.CRC16XMODEM());
+		this.writeUint16(this.calculateCRC());
 		this.swapEndian();// * Swap back to little endian
 
 		return Buffer.from(this.view._view);
 	}
 
-	CRC16XMODEM() {
+	calculateCRC() {
 		const view = this.view;
 		const data = view._view.subarray(0, 0x5e);
 
