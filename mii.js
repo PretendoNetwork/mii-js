@@ -117,10 +117,9 @@ function range(start, stop) {
 	return result;
 }
 
-class Mii extends bitBuffer.BitStream {
+class ExtendedBitStream extends bitBuffer.BitStream {
 	constructor(buffer) {
 		super(buffer.buffer, buffer.byteOffset, buffer.byteLength);
-		this.decode();
 	}
 
 	swapEndian() {
@@ -193,10 +192,17 @@ class Mii extends bitBuffer.BitStream {
 
 		this.writeBuffer(terminatedBuffer);
 	}
+}
+
+class Mii {
+	constructor(buffer) {
+		this.bitStream = new ExtendedBitStream(buffer);
+		this.decode();
+	}
 
 	validate() {
 		// Size check
-		assert.equal(this.length / 8, 0x60, `Invalid Mii data size. Got ${this.length / 8}, expected 96`);
+		assert.equal(this.bitStream.length / 8, 0x60, `Invalid Mii data size. Got ${this.bitStream.length / 8}, expected 96`);
 
 		// Value range and type checks
 		assert.ok(this.version === 0 || this.version === 3, `Invalid Mii version. Got ${this.version}, expected 0 or 3`);
@@ -284,93 +290,93 @@ class Mii extends bitBuffer.BitStream {
 	}
 
 	decode() {
-		this.version = this.readUint8();
-		this.allowCopying = this.readBoolean();
-		this.profanityFlag = this.readBoolean();
-		this.regionLock = this.readBits(2);
-		this.characterSet = this.readBits(2);
-		this.alignByte();
-		this.pageIndex = this.readBits(4);
-		this.slotIndex = this.readBits(4);
-		this.unknown1 = this.readBits(4);
-		this.deviceOrigin = this.readBits(3);
-		this.alignByte();
-		this.systemId = this.readBuffer(8);
-		this.swapEndian(); // * Mii ID data is BE
-		this.normalMii = this.readBoolean();
-		this.dsMii = this.readBoolean();
-		this.nonUserMii = this.readBoolean();
-		this.isValid = this.readBoolean();
-		this.creationTime = this.readBits(28);
-		this.swapEndian(); // * Swap back to LE
-		this.consoleMAC = this.readBuffer(6);
-		this.skipInt16(); // * 0x0000 padding
-		this.gender = this.readBit();
-		this.birthMonth = this.readBits(4);
-		this.birthDay = this.readBits(5);
-		this.favoriteColor = this.readBits(4);
-		this.favorite = this.readBoolean();
-		this.alignByte();
-		this.miiName = this.readUTF16String(0x14);
-		this.height = this.readUint8();
-		this.build = this.readUint8();
-		this.disableSharing = this.readBoolean();
-		this.faceType = this.readBits(4);
-		this.skinColor = this.readBits(3);
-		this.wrinklesType = this.readBits(4);
-		this.makeupType = this.readBits(4);
-		this.hairType = this.readUint8();
-		this.hairColor = this.readBits(3);
-		this.flipHair = this.readBoolean();
-		this.alignByte();
-		this.eyeType = this.readBits(6);
-		this.eyeColor = this.readBits(3);
-		this.eyeScale = this.readBits(4);
-		this.eyeVerticalStretch = this.readBits(3);
-		this.eyeRotation = this.readBits(5);
-		this.eyeSpacing = this.readBits(4);
-		this.eyeYPosition = this.readBits(5);
-		this.alignByte();
-		this.eyebrowType = this.readBits(5);
-		this.eyebrowColor = this.readBits(3);
-		this.eyebrowScale = this.readBits(4);
-		this.eyebrowVerticalStretch = this.readBits(3);
-		this.skipBit();
-		this.eyebrowRotation = this.readBits(4);
-		this.skipBit();
-		this.eyebrowSpacing = this.readBits(4);
-		this.eyebrowYPosition = this.readBits(5);
-		this.alignByte();
-		this.noseType = this.readBits(5);
-		this.noseScale = this.readBits(4);
-		this.noseYPosition = this.readBits(5);
-		this.alignByte();
-		this.mouthType = this.readBits(6);
-		this.mouthColor = this.readBits(3);
-		this.mouthScale = this.readBits(4);
-		this.mouthHorizontalStretch = this.readBits(3);
-		this.mouthYPosition = this.readBits(5);
-		this.mustacheType = this.readBits(3);
-		this.unknown2 = this.readUint8();
-		this.beardType = this.readBits(3);
-		this.facialHairColor = this.readBits(3);
-		this.mustacheScale = this.readBits(4);
-		this.mustacheYPosition = this.readBits(5);
-		this.alignByte();
-		this.glassesType = this.readBits(4);
-		this.glassesColor = this.readBits(3);
-		this.glassesScale = this.readBits(4);
-		this.glassesYPosition = this.readBits(5);
-		this.moleEnabled = this.readBoolean();
-		this.moleScale = this.readBits(4);
-		this.moleXPosition = this.readBits(5);
-		this.moleYPosition = this.readBits(5);
-		this.alignByte();
-		this.creatorName = this.readUTF16String(0x14);
-		this.skipInt16(); // * 0x0000 padding
-		this.swapEndian(); // * Swap to big endian because thats how checksum is calculated here
-		this.checksum = this.readUint16();
-		this.swapEndian(); // * Swap back to little endian
+		this.version = this.bitStream.readUint8();
+		this.allowCopying = this.bitStream.readBoolean();
+		this.profanityFlag = this.bitStream.readBoolean();
+		this.regionLock = this.bitStream.readBits(2);
+		this.characterSet = this.bitStream.readBits(2);
+		this.bitStream.alignByte();
+		this.pageIndex = this.bitStream.readBits(4);
+		this.slotIndex = this.bitStream.readBits(4);
+		this.unknown1 = this.bitStream.readBits(4);
+		this.deviceOrigin = this.bitStream.readBits(3);
+		this.bitStream.alignByte();
+		this.systemId = this.bitStream.readBuffer(8);
+		this.bitStream.swapEndian(); // * Mii ID data is BE
+		this.normalMii = this.bitStream.readBoolean();
+		this.dsMii = this.bitStream.readBoolean();
+		this.nonUserMii = this.bitStream.readBoolean();
+		this.isValid = this.bitStream.readBoolean();
+		this.creationTime = this.bitStream.readBits(28);
+		this.bitStream.swapEndian(); // * Swap back to LE
+		this.consoleMAC = this.bitStream.readBuffer(6);
+		this.bitStream.skipInt16(); // * 0x0000 padding
+		this.gender = this.bitStream.readBit();
+		this.birthMonth = this.bitStream.readBits(4);
+		this.birthDay = this.bitStream.readBits(5);
+		this.favoriteColor = this.bitStream.readBits(4);
+		this.favorite = this.bitStream.readBoolean();
+		this.bitStream.alignByte();
+		this.miiName = this.bitStream.readUTF16String(0x14);
+		this.height = this.bitStream.readUint8();
+		this.build = this.bitStream.readUint8();
+		this.disableSharing = this.bitStream.readBoolean();
+		this.faceType = this.bitStream.readBits(4);
+		this.skinColor = this.bitStream.readBits(3);
+		this.wrinklesType = this.bitStream.readBits(4);
+		this.makeupType = this.bitStream.readBits(4);
+		this.hairType = this.bitStream.readUint8();
+		this.hairColor = this.bitStream.readBits(3);
+		this.flipHair = this.bitStream.readBoolean();
+		this.bitStream.alignByte();
+		this.eyeType = this.bitStream.readBits(6);
+		this.eyeColor = this.bitStream.readBits(3);
+		this.eyeScale = this.bitStream.readBits(4);
+		this.eyeVerticalStretch = this.bitStream.readBits(3);
+		this.eyeRotation = this.bitStream.readBits(5);
+		this.eyeSpacing = this.bitStream.readBits(4);
+		this.eyeYPosition = this.bitStream.readBits(5);
+		this.bitStream.alignByte();
+		this.eyebrowType = this.bitStream.readBits(5);
+		this.eyebrowColor = this.bitStream.readBits(3);
+		this.eyebrowScale = this.bitStream.readBits(4);
+		this.eyebrowVerticalStretch = this.bitStream.readBits(3);
+		this.bitStream.skipBit();
+		this.eyebrowRotation = this.bitStream.readBits(4);
+		this.bitStream.skipBit();
+		this.eyebrowSpacing = this.bitStream.readBits(4);
+		this.eyebrowYPosition = this.bitStream.readBits(5);
+		this.bitStream.alignByte();
+		this.noseType = this.bitStream.readBits(5);
+		this.noseScale = this.bitStream.readBits(4);
+		this.noseYPosition = this.bitStream.readBits(5);
+		this.bitStream.alignByte();
+		this.mouthType = this.bitStream.readBits(6);
+		this.mouthColor = this.bitStream.readBits(3);
+		this.mouthScale = this.bitStream.readBits(4);
+		this.mouthHorizontalStretch = this.bitStream.readBits(3);
+		this.mouthYPosition = this.bitStream.readBits(5);
+		this.mustacheType = this.bitStream.readBits(3);
+		this.unknown2 = this.bitStream.readUint8();
+		this.beardType = this.bitStream.readBits(3);
+		this.facialHairColor = this.bitStream.readBits(3);
+		this.mustacheScale = this.bitStream.readBits(4);
+		this.mustacheYPosition = this.bitStream.readBits(5);
+		this.bitStream.alignByte();
+		this.glassesType = this.bitStream.readBits(4);
+		this.glassesColor = this.bitStream.readBits(3);
+		this.glassesScale = this.bitStream.readBits(4);
+		this.glassesYPosition = this.bitStream.readBits(5);
+		this.moleEnabled = this.bitStream.readBoolean();
+		this.moleScale = this.bitStream.readBits(4);
+		this.moleXPosition = this.bitStream.readBits(5);
+		this.moleYPosition = this.bitStream.readBits(5);
+		this.bitStream.alignByte();
+		this.creatorName = this.bitStream.readUTF16String(0x14);
+		this.bitStream.skipInt16(); // * 0x0000 padding
+		this.bitStream.swapEndian(); // * Swap to big endian because thats how checksum is calculated here
+		this.checksum = this.bitStream.readUint16();
+		this.bitStream.swapEndian(); // * Swap back to little endian
 
 		this.validate();
 		
@@ -383,101 +389,101 @@ class Mii extends bitBuffer.BitStream {
 		this.validate(); // * Don't write invalid Mii data
 		
 		// TODO - Maybe create a new stream instead of modifying the original?
-		this.bitSeek(0);
+		this.bitStream.bitSeek(0);
 
-		this.writeUint8(this.version);
-		this.writeBoolean(this.allowCopying)
-		this.writeBoolean(this.profanityFlag)
-		this.writeBits(this.regionLock, 2);
-		this.writeBits(this.characterSet, 2);
-		this.alignByte();
-		this.writeBits(this.pageIndex, 4);
-		this.writeBits(this.slotIndex, 4);
-		this.writeBits(this.unknown1, 4);
-		this.writeBits(this.deviceOrigin, 3);
-		this.alignByte();
-		this.writeBuffer(this.systemId);
-		this.swapEndian(); // * Mii ID data is BE
-		this.writeBits(this.creationTime, 28); // TODO - Calculate this instead of carrying it over
-		this.writeBoolean(this.isValid);
-		this.writeBoolean(this.nonUserMii);
-		this.writeBoolean(this.dsMii);
-		this.writeBoolean(this.normalMii);
-		this.swapEndian(); // * Swap back to LE
-		this.writeBuffer(this.consoleMAC);
-		this.writeUint16(0x0); // * 0x0000 padding
-		this.writeBit(this.gender);
-		this.writeBits(this.birthMonth, 4);
-		this.writeBits(this.birthDay, 5);
-		this.writeBits(this.favoriteColor, 4);
-		this.writeBoolean(this.favorite);
-		this.alignByte();
-		this.writeUTF16String(this.miiName);
-		this.writeUint8(this.height);
-		this.writeUint8(this.build);
-		this.writeBoolean(this.disableSharing);
-		this.writeBits(this.faceType, 4);
-		this.writeBits(this.skinColor, 3);
-		this.writeBits(this.wrinklesType, 4);
-		this.writeBits(this.makeupType, 4);
-		this.writeUint8(this.hairType);
-		this.writeBits(this.hairColor, 3);
-		this.writeBoolean(this.flipHair);
-		this.alignByte();
-		this.writeBits(this.eyeType, 6);
-		this.writeBits(this.eyeColor, 3);
-		this.writeBits(this.eyeScale, 4);
-		this.writeBits(this.eyeVerticalStretch, 3);
-		this.writeBits(this.eyeRotation, 5);
-		this.writeBits(this.eyeSpacing, 4);
-		this.writeBits(this.eyeYPosition, 5);
-		this.alignByte();
-		this.writeBits(this.eyebrowType, 5);
-		this.writeBits(this.eyebrowColor, 3);
-		this.writeBits(this.eyebrowScale, 4);
-		this.writeBits(this.eyebrowVerticalStretch, 3);
-		this.skipBit();
-		this.writeBits(this.eyebrowRotation, 4);
-		this.skipBit();
-		this.writeBits(this.eyebrowSpacing, 4);
-		this.writeBits(this.eyebrowYPosition, 5);
-		this.alignByte();
-		this.writeBits(this.noseType, 5);
-		this.writeBits(this.noseScale, 4);
-		this.writeBits(this.noseYPosition, 5);
-		this.alignByte();
-		this.writeBits(this.mouthType, 6);
-		this.writeBits(this.mouthColor, 3);
-		this.writeBits(this.mouthScale, 4);
-		this.writeBits(this.mouthHorizontalStretch, 3);
-		this.writeBits(this.mouthYPosition, 5);
-		this.writeBits(this.mustacheType, 3);
-		this.writeUint8(this.unknown2);
-		this.writeBits(this.beardType, 3);
-		this.writeBits(this.facialHairColor, 3);
-		this.writeBits(this.mustacheScale, 4);
-		this.writeBits(this.mustacheYPosition, 5);
-		this.alignByte();
-		this.writeBits(this.glassesType, 4);
-		this.writeBits(this.glassesColor, 3);
-		this.writeBits(this.glassesScale, 4);
-		this.writeBits(this.glassesYPosition, 5);
-		this.writeBoolean(this.moleEnabled);
-		this.writeBits(this.moleScale, 4);
-		this.writeBits(this.moleXPosition, 5);
-		this.writeBits(this.moleYPosition, 5);
-		this.alignByte();
-		this.writeUTF16String(this.creatorName);
-		this.writeUint16(0x0); // * 0x0000 padding
-		this.swapEndian();// * Swap to big endian because thats how checksum is calculated here
-		this.writeUint16(this.calculateCRC());
-		this.swapEndian();// * Swap back to little endian
+		this.bitStream.writeUint8(this.version);
+		this.bitStream.writeBoolean(this.allowCopying)
+		this.bitStream.writeBoolean(this.profanityFlag)
+		this.bitStream.writeBits(this.regionLock, 2);
+		this.bitStream.writeBits(this.characterSet, 2);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.pageIndex, 4);
+		this.bitStream.writeBits(this.slotIndex, 4);
+		this.bitStream.writeBits(this.unknown1, 4);
+		this.bitStream.writeBits(this.deviceOrigin, 3);
+		this.bitStream.alignByte();
+		this.bitStream.writeBuffer(this.systemId);
+		this.bitStream.swapEndian(); // * Mii ID data is BE
+		this.bitStream.writeBits(this.creationTime, 28); // TODO - Calculate this instead of carrying it over
+		this.bitStream.writeBoolean(this.isValid);
+		this.bitStream.writeBoolean(this.nonUserMii);
+		this.bitStream.writeBoolean(this.dsMii);
+		this.bitStream.writeBoolean(this.normalMii);
+		this.bitStream.swapEndian(); // * Swap back to LE
+		this.bitStream.writeBuffer(this.consoleMAC);
+		this.bitStream.writeUint16(0x0); // * 0x0000 padding
+		this.bitStream.writeBit(this.gender);
+		this.bitStream.writeBits(this.birthMonth, 4);
+		this.bitStream.writeBits(this.birthDay, 5);
+		this.bitStream.writeBits(this.favoriteColor, 4);
+		this.bitStream.writeBoolean(this.favorite);
+		this.bitStream.alignByte();
+		this.bitStream.writeUTF16String(this.miiName);
+		this.bitStream.writeUint8(this.height);
+		this.bitStream.writeUint8(this.build);
+		this.bitStream.writeBoolean(this.disableSharing);
+		this.bitStream.writeBits(this.faceType, 4);
+		this.bitStream.writeBits(this.skinColor, 3);
+		this.bitStream.writeBits(this.wrinklesType, 4);
+		this.bitStream.writeBits(this.makeupType, 4);
+		this.bitStream.writeUint8(this.hairType);
+		this.bitStream.writeBits(this.hairColor, 3);
+		this.bitStream.writeBoolean(this.flipHair);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.eyeType, 6);
+		this.bitStream.writeBits(this.eyeColor, 3);
+		this.bitStream.writeBits(this.eyeScale, 4);
+		this.bitStream.writeBits(this.eyeVerticalStretch, 3);
+		this.bitStream.writeBits(this.eyeRotation, 5);
+		this.bitStream.writeBits(this.eyeSpacing, 4);
+		this.bitStream.writeBits(this.eyeYPosition, 5);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.eyebrowType, 5);
+		this.bitStream.writeBits(this.eyebrowColor, 3);
+		this.bitStream.writeBits(this.eyebrowScale, 4);
+		this.bitStream.writeBits(this.eyebrowVerticalStretch, 3);
+		this.bitStream.skipBit();
+		this.bitStream.writeBits(this.eyebrowRotation, 4);
+		this.bitStream.skipBit();
+		this.bitStream.writeBits(this.eyebrowSpacing, 4);
+		this.bitStream.writeBits(this.eyebrowYPosition, 5);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.noseType, 5);
+		this.bitStream.writeBits(this.noseScale, 4);
+		this.bitStream.writeBits(this.noseYPosition, 5);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.mouthType, 6);
+		this.bitStream.writeBits(this.mouthColor, 3);
+		this.bitStream.writeBits(this.mouthScale, 4);
+		this.bitStream.writeBits(this.mouthHorizontalStretch, 3);
+		this.bitStream.writeBits(this.mouthYPosition, 5);
+		this.bitStream.writeBits(this.mustacheType, 3);
+		this.bitStream.writeUint8(this.unknown2);
+		this.bitStream.writeBits(this.beardType, 3);
+		this.bitStream.writeBits(this.facialHairColor, 3);
+		this.bitStream.writeBits(this.mustacheScale, 4);
+		this.bitStream.writeBits(this.mustacheYPosition, 5);
+		this.bitStream.alignByte();
+		this.bitStream.writeBits(this.glassesType, 4);
+		this.bitStream.writeBits(this.glassesColor, 3);
+		this.bitStream.writeBits(this.glassesScale, 4);
+		this.bitStream.writeBits(this.glassesYPosition, 5);
+		this.bitStream.writeBoolean(this.moleEnabled);
+		this.bitStream.writeBits(this.moleScale, 4);
+		this.bitStream.writeBits(this.moleXPosition, 5);
+		this.bitStream.writeBits(this.moleYPosition, 5);
+		this.bitStream.alignByte();
+		this.bitStream.writeUTF16String(this.creatorName);
+		this.bitStream.writeUint16(0x0); // * 0x0000 padding
+		this.bitStream.swapEndian();// * Swap to big endian because thats how checksum is calculated here
+		this.bitStream.writeUint16(this.calculateCRC());
+		this.bitStream.swapEndian();// * Swap back to little endian
 
-		return Buffer.from(this.view._view);
+		return Buffer.from(this.bitStream.view._view);
 	}
 
 	calculateCRC() {
-		const view = this.view;
+		const view = this.bitStream.view;
 		const data = view._view.subarray(0, 0x5e);
 
 		let crc = 0x0000;
