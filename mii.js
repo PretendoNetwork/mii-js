@@ -411,11 +411,11 @@ class Mii {
 		this.bitStream.alignByte();
 		this.bitStream.writeBuffer(this.systemId);
 		this.bitStream.swapEndian(); // * Mii ID data is BE
-		this.bitStream.writeBits(this.creationTime, 28); // TODO - Calculate this instead of carrying it over
-		this.bitStream.writeBoolean(this.isValid);
-		this.bitStream.writeBoolean(this.nonUserMii);
-		this.bitStream.writeBoolean(this.dsMii);
 		this.bitStream.writeBoolean(this.normalMii);
+		this.bitStream.writeBoolean(this.dsMii);
+		this.bitStream.writeBoolean(this.nonUserMii);
+		this.bitStream.writeBoolean(this.isValid);
+		this.bitStream.writeBits(this.creationTime, 28); // TODO - Calculate this instead of carrying it over
 		this.bitStream.swapEndian(); // * Swap back to LE
 		this.bitStream.writeBuffer(this.consoleMAC);
 		this.bitStream.writeUint16(0x0); // * 0x0000 padding
