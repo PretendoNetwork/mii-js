@@ -244,6 +244,13 @@ class Mii {
 		assert.ok(this.eyeRotation.inRange(range(8)), `Invalid Mii eye rotation. Got ${this.eyeRotation}, expected 0-7`);
 		assert.ok(this.eyeSpacing.inRange(range(13)), `Invalid Mii eye spacing. Got ${this.eyeSpacing}, expected 0-12`);
 		assert.ok(this.eyeYPosition.inRange(range(19)), `Invalid Mii eye Y position. Got ${this.eyeYPosition}, expected 0-18`);
+		assert.ok(this.eyebrowType.inRange(range(25)), `Invalid Mii eyebrow type. Got ${this.eyebrowType}, expected 0-24`);
+		assert.ok(this.eyebrowColor.inRange(range(8)), `Invalid Mii eyebrow color. Got ${this.eyebrowColor}, expected 0-7`);
+		assert.ok(this.eyebrowScale.inRange(range(9)), `Invalid Mii eyebrow scale. Got ${this.eyebrowScale}, expected 0-8`);
+		assert.ok(this.eyebrowVerticalStretch.inRange(range(7)), `Invalid Mii eyebrow vertical stretch. Got ${this.eyebrowVerticalStretch}, expected 0-6`);
+		assert.ok(this.eyebrowRotation.inRange(range(12)), `Invalid Mii eyebrow rotation. Got ${this.eyebrowRotation}, expected 0-11`);
+		assert.ok(this.eyebrowSpacing.inRange(range(13)), `Invalid Mii eyebrow spacing. Got ${this.eyebrowSpacing}, expected 0-12`);
+		assert.ok(this.eyebrowYPosition.inRange(range(3, 19)), `Invalid Mii eyebrow Y position. Got ${this.eyebrowYPosition}, expected 3-18`);
 		assert.ok(this.noseType.inRange(range(18)), `Invalid Mii nose type. Got ${this.noseType}, expected 0-17`);
 		assert.ok(this.noseScale.inRange(range(9)), `Invalid Mii nose scale. Got ${this.noseScale}, expected 0-8`);
 		assert.ok(this.noseYPosition.inRange(range(19)), `Invalid Mii nose Y position. Got ${this.noseYPosition}, expected 0-18`);
