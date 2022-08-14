@@ -498,6 +498,8 @@ class Mii extends bitBuffer.BitStream {
 	}
 
 	encodeStudio() {
+		this.validate();
+		
 		/*
 			Can also disable randomization with:
 
@@ -732,6 +734,8 @@ class Mii extends bitBuffer.BitStream {
 	}
 
 	studioAssetUrl(assetPath) {
+		this.validate();
+
 		const assetPathHash = crypto.createHash('md5').update(assetPath).digest('hex').toString();
 		const char0 = assetPathHash[0];
 		const char1 = assetPathHash[1];
