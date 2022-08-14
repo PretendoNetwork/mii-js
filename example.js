@@ -6,10 +6,18 @@ const mii = new Mii(Buffer.from(miiData, 'base64'));
 
 // Encode as Mii Studio Mii
 let encoded = mii.encodeStudio();
-console.log(encoded).toString('base64');
+console.log(encoded.toString('base64'));
 
 // Get Mii Studio render URL
-let studioUrl = mii.studioUrl();
+let studioUrl = mii.studioUrl({
+	type: 'all_body'
+});
+console.log(studioUrl);
+
+mii.height = 10
+studioUrl = mii.studioUrl({
+	type: 'all_body'
+});
 console.log(studioUrl);
 
 // Change Mii data
@@ -25,6 +33,9 @@ console.log(studioUrl);
 // Encode as Wii U/3DS Mii
 encoded = mii.encode();
 console.log(encoded.toString('base64'));
+
+// Get Mii Studio asset URL
+console.log(mii.studioAssetUrlGlasses());
 
 // Error on invalid Mii data
 mii.hairColor = 9999;

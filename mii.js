@@ -1,5 +1,10 @@
-const bitBuffer = require('bit-buffer');
+const crypto = require('crypto');
 const assert = require('assert');
+const bitBuffer = require('bit-buffer');
+
+const STUDIO_RENDER_URL_BASE = 'https://studio.mii.nintendo.com/miis/image.png';
+const STUDIO_ASSET_URL_BASE = 'https://mii-studio.akamaized.net/editor/1';
+const STUDIO_ASSET_FILE_TYPE = 'webp';
 
 const STUDIO_RENDER_DEFAULTS = {
 	type: 'face',
@@ -626,7 +631,114 @@ class Mii extends bitBuffer.BitStream {
 
 		const query = new URLSearchParams(queryParams).toString();
 
-		return `https://studio.mii.nintendo.com/miis/image.png?${query}`;
+		return `${STUDIO_RENDER_URL_BASE}?${query}`;
+	}
+
+	studioAssetUrlBody() {
+		return this.studioAssetUrl(`body/${this.gender}/${this.favoriteColor}`);
+	}
+
+	studioAssetUrlHead() {
+		return this.studioAssetUrl(`face/${this.faceType}/${this.wrinklesType}/${this.makeupType}/${this.skinColor}`);
+	}
+
+	studioAssetUrlFace() {
+		// Alias
+		return this.studioAssetUrlHead();
+	}
+
+	studioAssetUrlEye() {
+		return this.studioAssetUrl(`eye/${this.eyeType}/${this.eyeColor + 8}`);
+	}
+
+	studioAssetUrlEyebrow() {
+		let eyebrowColor = this.eyebrowColor;
+
+		if (this.eyebrowColor === 0) {
+			eyebrowColor = 8
+		}
+
+		return this.studioAssetUrl(`eyebrow/${this.eyebrowType}/${eyebrowColor}`);
+	}
+
+	studioAssetUrlNose() {
+		return this.studioAssetUrl(`nose/${this.noseType}/${this.skinColor}`);
+	}
+
+	studioAssetUrlMouth() {
+		let mouthColor = 0;
+
+		if (this.mouthColor < 4) {
+			mouthColor = this.mouthColor + 19;
+		}
+		
+		return this.studioAssetUrl(`mouth/${this.mouthType}/${mouthColor}`);
+	}
+	
+	studioAssetUrlHair() {
+		let assetPath;
+		let hairColor = this.hairColor;
+
+		if (this.hairColor == 0) {
+			hairColor = 8;
+		}
+
+		if (this.hairType === 34 || this.hairType === 57) {
+			// Types 34 and 57 are hats
+			// No flip and they use clothes color not hair color
+			assetPath = `hair/${this.hairType}/${this.faceType}/${this.favoriteColor}`;
+		} else {
+			// Regular hair types
+			assetPath = `${this.flipHair ? 'hairflip' : 'hair'}/${this.hairType}/${this.faceType}/${hairColor}`;
+		}
+
+		return this.studioAssetUrl(assetPath);
+	}
+
+	studioAssetUrlBeard() {
+		let facialHairColor = this.facialHairColor;
+
+		if (this.facialHairColor === 0) {
+			facialHairColor = 8
+		}
+
+		return this.studioAssetUrl(`beard/${this.beardType}/${this.faceType}/${facialHairColor}`);
+	}
+
+	studioAssetUrlMustache() {
+		let facialHairColor = this.facialHairColor;
+
+		if (this.facialHairColor === 0) {
+			facialHairColor = 8
+		}
+
+		return this.studioAssetUrl(`mustache/${this.mustacheType}/${facialHairColor}`);
+	}
+
+	studioAssetUrlGlasses() {
+		let glassesColor = 0;
+
+		if (this.glassesColor == 0) {
+			glassesColor = 8;
+		} else if (this.glassesColor < 6) {
+			glassesColor = this.glassesColor + 13;
+		}
+
+		return this.studioAssetUrl(`glass/${this.glassesType}/${glassesColor}`);
+	}
+
+	studioAssetUrlMole() {
+		return this.studioAssetUrl(`mole/${this.moleEnabled ? 1 : 0}`);
+	}
+
+	studioAssetUrl(assetPath) {
+		const assetPathHash = crypto.createHash('md5').update(assetPath).digest('hex').toString();
+		const char0 = assetPathHash[0];
+		const char1 = assetPathHash[1];
+		const char2 = assetPathHash[2];
+		const fileName = assetPathHash.substring(3, 12);
+
+		return `${STUDIO_ASSET_URL_BASE}/${STUDIO_ASSET_FILE_TYPE}/1024/${char0}/${char1}/${char2}/${fileName}.${STUDIO_ASSET_FILE_TYPE}`;
 	}
 }
 
