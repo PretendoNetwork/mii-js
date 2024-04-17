@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const MD5 = require('md5.js');
 const assert = require('assert');
 const bitBuffer = require('bit-buffer');
 
@@ -749,7 +749,7 @@ class Mii {
 	studioAssetUrl(assetPath) {
 		this.validate();
 
-		const assetPathHash = crypto.createHash('md5').update(assetPath).digest('hex').toString();
+		const assetPathHash = new MD5().update(assetPath).digest('hex');
 		const char0 = assetPathHash[0];
 		const char1 = assetPathHash[1];
 		const char2 = assetPathHash[2];
