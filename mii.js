@@ -18,9 +18,17 @@ const STUDIO_RENDER_DEFAULTS = {
 	characterXRotate: 0,
 	characterYRotate: 0,
 	characterZRotate: 0,
+	/*
+	The defaults of zero produce a dark-looking Mii render.
+	I'm not sure if we know the default, or if it's even a static value.
+	The API doesn't even accept invalid, negative, or blank values for these.
+	These values will be clamped if you specify them manually,
+	... but for now they will be excluded.
 	lightXDirection: 0,
 	lightYDirection: 0,
 	lightZDirection: 0,
+	*/
+	// Seemingly doesn't change the image when the directions are zero or none.
 	lightDirectionMode: 'none',
 	instanceCount: 1,
 	instanceRotationMode: 'model',
@@ -637,9 +645,9 @@ class Mii {
 		queryParams.characterXRotate = clamp(queryParams.characterXRotate, 359);
 		queryParams.characterYRotate = clamp(queryParams.characterYRotate, 359);
 		queryParams.characterZRotate = clamp(queryParams.characterZRotate, 359);
-		queryParams.lightXDirection = clamp(queryParams.lightXDirection, 359);
-		queryParams.lightYDirection = clamp(queryParams.lightYDirection, 359);
-		queryParams.lightZDirection = clamp(queryParams.lightZDirection, 359);
+		queryParams.lightXDirection !== undefined && (queryParams.lightXDirection = clamp(queryParams.lightXDirection, 359));
+		queryParams.lightYDirection !== undefined && (queryParams.lightYDirection = clamp(queryParams.lightYDirection, 359));
+		queryParams.lightZDirection !== undefined && (queryParams.lightZDirection = clamp(queryParams.lightZDirection, 359));
 		queryParams.lightDirectionMode = STUDIO_RENDER_LIGHT_DIRECTION_MODS.includes(queryParams.lightDirectionMode) ? queryParams.lightDirectionMode : STUDIO_RENDER_DEFAULTS.lightDirectionMode;
 		queryParams.instanceCount = clamp(queryParams.instanceCount, 1, 16);
 		queryParams.instanceRotationMode = STUDIO_RENDER_INSTANCE_ROTATION_MODES.includes(queryParams.instanceRotationMode) ? queryParams.instanceRotationMode : STUDIO_RENDER_DEFAULTS.instanceRotationMode;
