@@ -467,7 +467,7 @@ Default: `0`
 ### lightYDirection
 Rotate the light source position/direction in the Y axis
 
-Default: `359`
+Default: `0`
 
 | Min | Max |
 | --- | --- |
@@ -476,7 +476,7 @@ Default: `359`
 ### lightZDirection
 Rotate the light source position/direction in the Z axis
 
-Default: `359`
+Default: `0`
 
 | Min | Max |
 | --- | --- |
@@ -484,6 +484,8 @@ Default: `359`
 
 ### lightDirectionMode
 Changes the light direction mode
+
+**When this is set to the default of none, the light direction parameters are not sent at all.**
 
 Default: `none`
 
