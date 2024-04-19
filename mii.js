@@ -644,9 +644,16 @@ class Mii {
 		queryParams.instanceCount = clamp(queryParams.instanceCount, 1, 16);
 		queryParams.instanceRotationMode = STUDIO_RENDER_INSTANCE_ROTATION_MODES.includes(queryParams.instanceRotationMode) ? queryParams.instanceRotationMode : STUDIO_RENDER_DEFAULTS.instanceRotationMode;
 
-		const query = new URLSearchParams(queryParams).toString();
+		const query = new URLSearchParams(queryParams);
 
-		return `${STUDIO_RENDER_URL_BASE}?${query}`;
+		if (queryParams.lightDirectionMode === 'none') {
+			query.delete('lightDirectionMode');
+			query.delete('lightXDirection');
+			query.delete('lightYDirection');
+			query.delete('lightZDirection');
+		}
+
+		return `${STUDIO_RENDER_URL_BASE}?${query.toString()}`;
 	}
 
 	studioAssetUrlBody() {
