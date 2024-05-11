@@ -596,26 +596,27 @@ export default class Mii {
     }
 
     public studioUrl(queryParams: {
-        type: string;
-        expression: string;
-        width: number;
-        bgColor: string;
-        clothesColor: string;
-        cameraXRotate: number;
-        cameraYRotate: number;
-        cameraZRotate: number;
-        characterXRotate: number;
-        characterYRotate: number;
-        characterZRotate: number;
-        lightXDirection: number;
-        lightYDirection: number;
-        lightZDirection: number;
-        lightDirectionMode: string;
-        instanceCount: number;
-        instanceRotationMode: string;
+        type?: string;
+        expression?: string;
+        width?: number;
+        bgColor?: string;
+        clothesColor?: string;
+        cameraXRotate?: number;
+        cameraYRotate?: number;
+        cameraZRotate?: number;
+        characterXRotate?: number;
+        characterYRotate?: number;
+        characterZRotate?: number;
+        lightXDirection?: number;
+        lightYDirection?: number;
+        lightZDirection?: number;
+        lightDirectionMode?: string;
+        instanceCount?: number;
+        instanceRotationMode?: string;
         data?: string;
     } = STUDIO_RENDER_DEFAULTS) {
-        queryParams = {
+
+        const params = {
             ...STUDIO_RENDER_DEFAULTS,
             ...queryParams,
             data: this.encodeStudio().toString("hex"),
@@ -623,44 +624,44 @@ export default class Mii {
 
         // TODO - Assert and error out instead of setting defaults?
 
-        queryParams.type = STUDIO_RENDER_TYPES.includes(queryParams.type as string)
-            ? queryParams.type
+        params.type = STUDIO_RENDER_TYPES.includes(params.type as string)
+            ? params.type
             : STUDIO_RENDER_DEFAULTS.type;
-        queryParams.expression = STUDIO_RENDER_EXPRESSIONS.includes(queryParams.expression as string)
-            ? queryParams.expression
+        params.expression = STUDIO_RENDER_EXPRESSIONS.includes(params.expression as string)
+            ? params.expression
             : STUDIO_RENDER_DEFAULTS.expression;
-        queryParams.width = Util.clamp(queryParams.width, 512);
-        queryParams.bgColor = STUDIO_BG_COLOR_REGEX.test(queryParams.bgColor as string)
-            ? queryParams.bgColor
+        params.width = Util.clamp(params.width, 512);
+        params.bgColor = STUDIO_BG_COLOR_REGEX.test(params.bgColor as string)
+            ? params.bgColor
             : STUDIO_RENDER_DEFAULTS.bgColor;
-        queryParams.clothesColor = STUDIO_RENDER_CLOTHES_COLORS.includes(queryParams.clothesColor)
-            ? queryParams.clothesColor
+        params.clothesColor = STUDIO_RENDER_CLOTHES_COLORS.includes(params.clothesColor)
+            ? params.clothesColor
             : STUDIO_RENDER_DEFAULTS.clothesColor;
-        queryParams.cameraXRotate = Util.clamp(queryParams.cameraXRotate, 359);
-        queryParams.cameraYRotate = Util.clamp(queryParams.cameraYRotate, 359);
-        queryParams.cameraZRotate = Util.clamp(queryParams.cameraZRotate, 359);
-        queryParams.characterXRotate = Util.clamp(queryParams.characterXRotate, 359);
-        queryParams.characterYRotate = Util.clamp(queryParams.characterYRotate, 359);
-        queryParams.characterZRotate = Util.clamp(queryParams.characterZRotate, 359);
-        queryParams.lightXDirection = Util.clamp(queryParams.lightXDirection, 359);
-        queryParams.lightYDirection = Util.clamp(queryParams.lightYDirection, 359);
-        queryParams.lightZDirection = Util.clamp(queryParams.lightZDirection, 359);
-        queryParams.lightDirectionMode = STUDIO_RENDER_LIGHT_DIRECTION_MODS.includes(
-            queryParams.lightDirectionMode
+        params.cameraXRotate = Util.clamp(params.cameraXRotate, 359);
+        params.cameraYRotate = Util.clamp(params.cameraYRotate, 359);
+        params.cameraZRotate = Util.clamp(params.cameraZRotate, 359);
+        params.characterXRotate = Util.clamp(params.characterXRotate, 359);
+        params.characterYRotate = Util.clamp(params.characterYRotate, 359);
+        params.characterZRotate = Util.clamp(params.characterZRotate, 359);
+        params.lightXDirection = Util.clamp(params.lightXDirection, 359);
+        params.lightYDirection = Util.clamp(params.lightYDirection, 359);
+        params.lightZDirection = Util.clamp(params.lightZDirection, 359);
+        params.lightDirectionMode = STUDIO_RENDER_LIGHT_DIRECTION_MODS.includes(
+            params.lightDirectionMode
         )
-            ? queryParams.lightDirectionMode
+            ? params.lightDirectionMode
             : STUDIO_RENDER_DEFAULTS.lightDirectionMode;
-        queryParams.instanceCount = Util.clamp(queryParams.instanceCount, 1, 16);
-        queryParams.instanceRotationMode = STUDIO_RENDER_INSTANCE_ROTATION_MODES.includes(
-            queryParams.instanceRotationMode
+        params.instanceCount = Util.clamp(params.instanceCount, 1, 16);
+        params.instanceRotationMode = STUDIO_RENDER_INSTANCE_ROTATION_MODES.includes(
+            params.instanceRotationMode
         )
-            ? queryParams.instanceRotationMode
+            ? params.instanceRotationMode
             : STUDIO_RENDER_DEFAULTS.instanceRotationMode;
 
         // converts non-string params to strings
-        const query = new URLSearchParams(Object.fromEntries(Object.entries(queryParams).map(([key, value]) => [key, value.toString()])))
+        const query = new URLSearchParams(Object.fromEntries(Object.entries(params).map(([key, value]) => [key, value.toString()])))
 
-        if (queryParams.lightDirectionMode === "none") {
+        if (params.lightDirectionMode === "none") {
             query.delete("lightDirectionMode");
             query.delete("lightXDirection");
             query.delete("lightYDirection");

@@ -1,4 +1,4 @@
-const Mii = require('./mii');
+import Mii from "./mii";
 
 // Parse Mii data
 const miiData = 'AwEAMLrDTIqIpLZhlH8Ps6TA4eK42QAAAFAOMHPgSQBtAG8AcgBhAHPgDzAAAGsrAgA5AQJoRBgm\r\nNEYUgRIWaA0AACmGAUhQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG7s';
