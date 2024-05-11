@@ -2,7 +2,7 @@
   "name": "mii-js",
   "version": "1.0.4",
   "description": "",
-  "main": "mii.js",
+  "main": "dist/mii.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,8 @@
     "bit-buffer": "^0.2.5"
   },
   "devDependencies": {
-    "eslint": "^8.21.0"
+    "@types/node": "^20.12.11",
+    "eslint": "^8.21.0",
+    "typescript": "^5.4.5"
   }
 }
