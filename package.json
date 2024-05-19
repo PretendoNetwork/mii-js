@@ -1,5 +1,5 @@
 {
-  "name": "mii-js",
+  "name": "@pretendonetwork/mii-js",
   "version": "1.0.4",
   "description": "",
   "main": "dist/mii.js",
