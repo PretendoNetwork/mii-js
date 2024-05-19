@@ -1,4 +1,4 @@
-import Mii from "./mii";
+import Mii from './mii';
 
 // Parse Mii data
 const miiData = 'AwEAMLrDTIqIpLZhlH8Ps6TA4eK42QAAAFAOMHPgSQBtAG8AcgBhAHPgDzAAAGsrAgA5AQJoRBgm\r\nNEYUgRIWaA0AACmGAUhQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG7s';
@@ -14,7 +14,7 @@ let studioUrl = mii.studioUrl({
 });
 console.log(studioUrl);
 
-mii.height = 10
+mii.height = 10;
 studioUrl = mii.studioUrl({
 	type: 'all_body'
 });

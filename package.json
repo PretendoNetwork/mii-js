@@ -4,8 +4,10 @@
   "description": "",
   "main": "dist/mii.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "lint": "npx eslint .",
+    "build": "npm run lint && npm run clean && npx tsc && npx tsc-alias && npm run copy-files",
+    "clean": "npx rimraf ./dist",
+    "copy-files": "cp package.json dist/package.json && cp README.md dist/README.md"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.11",
-    "eslint": "^8.21.0",
-    "typescript": "^5.4.5"
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "rimraf": "^5.0.7",
+    "tsc-alias": "^1.8.10",
+    "typescript": "5.3"
   }
 }

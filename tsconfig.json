@@ -1,27 +1,22 @@
 {
-  "compilerOptions": {
-    "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "incremental": true,
-    "target": "ES2020",
-    "module": "Node16",
-    "rootDir": "./src",
-    "moduleResolution": "Node16",
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "removeComments": true,
-    "esModuleInterop": true,
-    "preserveSymlinks": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "include": ["src", "index.ts"],
-  "exclude": ["node_modules", "./dist/**/*", "../dist"]
+	"compilerOptions": {
+		"strict": true,
+		"strictPropertyInitialization": false,
+		"sourceMap": true,
+		"declaration": true,
+		"resolveJsonModule": true,
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"baseUrl": "src",
+		"outDir": "dist",
+		"allowJs": true,
+		"target": "es2022",
+		"noEmitOnError": true,
+		"noImplicitAny": false, // added this to avoid errors caused by bit-buffer types
+		"paths": {
+			"@/*": ["./*"]
+		}
+	},
+	"include": ["src"]
 }
