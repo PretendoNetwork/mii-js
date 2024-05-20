@@ -70,3 +70,5 @@ static-text.json
 
 # custom
 *.cfsd
+
+dist
