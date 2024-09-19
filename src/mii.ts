@@ -23,7 +23,6 @@ const STUDIO_RENDER_DEFAULTS = {
 	lightYDirection: 0,
 	lightZDirection: 0,
 	lightDirectionMode: 'none',
-	//splitDepthOffset: 0, // No known effect on cdn-mii 2.0.0/Mii Studio
 	splitMode: 'none',
 	instanceCount: 1,
 	instanceRotationMode: 'model',
