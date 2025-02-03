@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/mii.js",
   "scripts": {
-    "lint": "npx eslint .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "build": "npm run lint && npm run clean && npx tsc && npx tsc-alias && npm run copy-files",
     "clean": "npx rimraf ./dist",
     "copy-files": "cp package.json dist/package.json && cp README.md dist/README.md"
@@ -16,10 +17,9 @@
     "bit-buffer": "^0.2.5"
   },
   "devDependencies": {
+    "@pretendonetwork/eslint-config": "^0.0.8",
     "@types/node": "^20.12.11",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
-    "eslint": "^8.56.0",
+    "eslint": "^9.19.0",
     "rimraf": "^5.0.7",
     "tsc-alias": "^1.8.10",
     "typescript": "5.3"

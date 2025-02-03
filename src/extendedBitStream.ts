@@ -1,7 +1,6 @@
 import { BitStream } from 'bit-buffer';
 
 export default class ExtendedBitStream extends BitStream {
-
 	constructor(buffer: Buffer) {
 		super(buffer, buffer.byteOffset, buffer.byteLength);
 	}
@@ -69,7 +68,6 @@ export default class ExtendedBitStream extends BitStream {
 	public writeBit(bit: number): void {
 		this.writeBits(bit, 1);
 	}
-
 
 	public writeBuffer(buffer: Buffer): void {
 		buffer.forEach(byte => this.writeUint8(byte));
