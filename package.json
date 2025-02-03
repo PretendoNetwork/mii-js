@@ -6,9 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "build": "npm run lint && npm run clean && npx tsc && npx tsc-alias && npm run copy-files",
-    "clean": "npx rimraf ./dist",
-    "copy-files": "cp package.json dist/package.json && cp README.md dist/README.md"
+    "build": "npm run lint && npm run clean && tsc && tsc-alias",
+    "clean": "rimraf ./dist"
   },
   "keywords": [],
   "author": "",
