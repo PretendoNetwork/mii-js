@@ -16,7 +16,7 @@
     "bit-buffer": "^0.2.5"
   },
   "devDependencies": {
-    "@pretendonetwork/eslint-config": "^0.0.8",
+    "@pretendonetwork/eslint-config": "^0.1.1",
     "@types/node": "^20.12.11",
     "eslint": "^9.19.0",
     "rimraf": "^5.0.7",
