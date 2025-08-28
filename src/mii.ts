@@ -665,6 +665,10 @@ export default class Mii {
 		return `${STUDIO_RENDER_URL_BASE}?${query.toString()}`;
 	}
 
+	public studioAssetUrlBody(): string {
+		return this.studioAssetUrl(`body/${this.gender}/${this.favoriteColor}`);
+	}
+
 	public studioAssetUrlHead(): string {
 		return this.studioAssetUrl(
 			`face/${this.faceType}/${this.wrinklesType}/${this.makeupType}/${this.skinColor}`
