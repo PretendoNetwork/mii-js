@@ -24,13 +24,13 @@ const STUDIO_RENDER_DEFAULTS = {
 	lightZDirection: 0,
 	lightDirectionMode: 'none',
 	instanceCount: 1,
-	instanceRotationMode: 'model',
+	instanceRotationMode: 'model'
 };
 
 const STUDIO_RENDER_TYPES = [
 	'face',
 	'face_only',
-	'all_body',
+	'all_body'
 ];
 
 const STUDIO_RENDER_EXPRESSIONS = [
@@ -52,7 +52,7 @@ const STUDIO_RENDER_EXPRESSIONS = [
 	'wink_right_open_mouth',
 	'like_wink_left',
 	'like_wink_right',
-	'frustrated',
+	'frustrated'
 ];
 
 const STUDIO_RENDER_CLOTHES_COLORS = [
@@ -68,7 +68,7 @@ const STUDIO_RENDER_CLOTHES_COLORS = [
 	'purple',
 	'brown',
 	'white',
-	'black',
+	'black'
 ];
 
 const STUDIO_RENDER_LIGHT_DIRECTION_MODS = [
@@ -77,19 +77,18 @@ const STUDIO_RENDER_LIGHT_DIRECTION_MODS = [
 	'flipx',
 	'camera',
 	'offset',
-	'set',
+	'set'
 ];
 
 const STUDIO_RENDER_INSTANCE_ROTATION_MODES = [
 	'model',
 	'camera',
-	'both',
+	'both'
 ];
 
 const STUDIO_BG_COLOR_REGEX = /^[0-9A-F]{8}$/; // Mii Studio does not allow lowercase
 
 export default class Mii {
-
 	public bitStream: ExtendedBitStream;
 
 	// Mii data
@@ -265,7 +264,6 @@ export default class Mii {
 		if (!this.normalMii && !this.disableSharing) {
 			assert.fail('Special Miis must have sharing disabled');
 		}
-
 	}
 
 	public decode(): void {
@@ -462,7 +460,6 @@ export default class Mii {
 		return Buffer.from(this.bitStream.view._view);
 	}
 
-
 	public calculateCRC(): number {
 		const view = this.bitStream.view;
 
@@ -491,10 +488,10 @@ export default class Mii {
 
 		/*
                 Can also disable randomization with:
-    
+
                 let miiStudioData = Buffer.alloc(0x2F);
                 let next = 256;
-    
+
                 and removing "randomizer" and the "miiStudioData.writeUInt8(randomizer);" call
             */
 		const miiStudioData = Buffer.alloc(0x2f);
@@ -594,30 +591,29 @@ export default class Mii {
 	}
 
 	public studioUrl(queryParams: {
-        type?: string;
-        expression?: string;
-        width?: number;
-        bgColor?: string;
-        clothesColor?: string;
-        cameraXRotate?: number;
-        cameraYRotate?: number;
-        cameraZRotate?: number;
-        characterXRotate?: number;
-        characterYRotate?: number;
-        characterZRotate?: number;
-        lightXDirection?: number;
-        lightYDirection?: number;
-        lightZDirection?: number;
-        lightDirectionMode?: string;
-        instanceCount?: number;
-        instanceRotationMode?: string;
-        data?: string;
-    } = STUDIO_RENDER_DEFAULTS): string {
-
+		type?: string;
+		expression?: string;
+		width?: number;
+		bgColor?: string;
+		clothesColor?: string;
+		cameraXRotate?: number;
+		cameraYRotate?: number;
+		cameraZRotate?: number;
+		characterXRotate?: number;
+		characterYRotate?: number;
+		characterZRotate?: number;
+		lightXDirection?: number;
+		lightYDirection?: number;
+		lightZDirection?: number;
+		lightDirectionMode?: string;
+		instanceCount?: number;
+		instanceRotationMode?: string;
+		data?: string;
+	} = STUDIO_RENDER_DEFAULTS): string {
 		const params = {
 			...STUDIO_RENDER_DEFAULTS,
 			...queryParams,
-			data: this.encodeStudio().toString('hex'),
+			data: this.encodeStudio().toString('hex')
 		};
 
 		// TODO - Assert and error out instead of setting defaults?
@@ -779,5 +775,4 @@ export default class Mii {
 
 		return `${STUDIO_ASSET_URL_BASE}/${STUDIO_ASSET_FILE_TYPE}/1024/${char0}/${char1}/${char2}/${fileName}.${STUDIO_ASSET_FILE_TYPE}`;
 	}
-
 }
