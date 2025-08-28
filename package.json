@@ -1,13 +1,19 @@
 {
   "name": "@pretendonetwork/mii-js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "dist/mii.js",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "build": "npm run lint && npm run clean && tsc && tsc-alias",
+    "build": "npm run clean && tsc && tsc-alias",
     "clean": "rimraf ./dist"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/mii.d.ts",
+      "default": "./dist/mii.js"
+    }
   },
   "keywords": [],
   "author": "",
