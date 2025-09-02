@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import md5 from 'crypto-js/md5';
 import ExtendedBitStream from './extendedBitStream';
 import Util from './util';

@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { BitStream } from 'bit-buffer';
 
 export default class ExtendedBitStream extends BitStream {
@@ -77,7 +78,7 @@ export default class ExtendedBitStream extends BitStream {
 		const stringBuffer = Buffer.from(string, 'utf16le');
 		const terminatedBuffer = Buffer.alloc(0x14);
 
-		stringBuffer.copy(terminatedBuffer);
+		stringBuffer.set(terminatedBuffer);
 
 		this.writeBuffer(terminatedBuffer);
 	}
