@@ -1,32 +1,33 @@
 {
   "name": "@pretendonetwork/mii-js",
-  "version": "1.0.5",
-  "description": "",
-  "main": "dist/mii.js",
+  "version": "1.0.6",
+  "description": "A JavaScript library used to interact with Mii data from the Wii U and 3DS",
+  "type": "module",
   "scripts": {
+    "dev": "tsup --watch",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "build": "npm run clean && tsc && tsc-alias",
-    "clean": "rimraf ./dist"
+    "lint:fix": "eslint . --fix",
+    "build": "tsup && tsc --noEmit"
   },
   "exports": {
     ".": {
       "types": "./dist/mii.d.ts",
-      "default": "./dist/mii.js"
+      "require": "./dist/mii.cjs",
+      "import": "./dist/mii.js"
     }
   },
   "keywords": [],
-  "author": "",
   "license": "GNU AFFERO GPLV3",
   "dependencies": {
-    "bit-buffer": "^0.2.5"
+    "bit-buffer": "^0.2.5",
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
     "@pretendonetwork/eslint-config": "^0.1.1",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.12.11",
     "eslint": "^9.19.0",
-    "rimraf": "^5.0.7",
-    "tsc-alias": "^1.8.10",
+    "tsup": "^8.3.5",
     "typescript": "5.3"
   }
 }
