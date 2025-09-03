@@ -617,6 +617,7 @@ export default class Mii {
 		instanceCount?: number;
 		instanceRotationMode?: string;
 		data?: string;
+		splitMode?: string;
 	} = STUDIO_RENDER_DEFAULTS): string {
 		const params = {
 			...STUDIO_RENDER_DEFAULTS,
