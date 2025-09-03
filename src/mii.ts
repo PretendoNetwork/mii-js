@@ -85,7 +85,7 @@ const STUDIO_SPLIT_MODES = [
 	'none', // Not actually valid, returns 400
 	'front',
 	'back',
-	'both',
+	'both'
 ];
 
 const STUDIO_RENDER_INSTANCE_ROTATION_MODES = [
@@ -674,8 +674,9 @@ export default class Mii {
 			query.delete('lightYDirection');
 			query.delete('lightZDirection');
 		}
-		if (params.splitMode === 'none')
+		if (params.splitMode === 'none') {
 			query.delete('splitMode');
+		}
 
 		return `${STUDIO_RENDER_URL_BASE}?${query.toString()}`;
 	}
