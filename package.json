@@ -1,6 +1,6 @@
 {
   "name": "@pretendonetwork/mii-js",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A JavaScript library used to interact with Mii data from the Wii U and 3DS",
   "type": "module",
   "files": [

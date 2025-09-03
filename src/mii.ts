@@ -23,6 +23,7 @@ const STUDIO_RENDER_DEFAULTS = {
 	lightYDirection: 0,
 	lightZDirection: 0,
 	lightDirectionMode: 'none',
+	splitMode: 'none',
 	instanceCount: 1,
 	instanceRotationMode: 'model'
 };
@@ -71,13 +72,20 @@ const STUDIO_RENDER_CLOTHES_COLORS = [
 	'black'
 ];
 
-const STUDIO_RENDER_LIGHT_DIRECTION_MODS = [
+const STUDIO_RENDER_LIGHT_DIRECTION_MODES = [
 	'none',
 	'zerox',
 	'flipx',
 	'camera',
 	'offset',
 	'set'
+];
+
+const STUDIO_SPLIT_MODES = [
+	'none', // Not actually valid, returns 400
+	'front',
+	'back',
+	'both'
 ];
 
 const STUDIO_RENDER_INSTANCE_ROTATION_MODES = [
@@ -609,6 +617,7 @@ export default class Mii {
 		instanceCount?: number;
 		instanceRotationMode?: string;
 		data?: string;
+		splitMode?: string;
 	} = STUDIO_RENDER_DEFAULTS): string {
 		const params = {
 			...STUDIO_RENDER_DEFAULTS,
@@ -640,11 +649,16 @@ export default class Mii {
 		params.lightXDirection = Util.clamp(params.lightXDirection, 359);
 		params.lightYDirection = Util.clamp(params.lightYDirection, 359);
 		params.lightZDirection = Util.clamp(params.lightZDirection, 359);
-		params.lightDirectionMode = STUDIO_RENDER_LIGHT_DIRECTION_MODS.includes(
+		params.lightDirectionMode = STUDIO_RENDER_LIGHT_DIRECTION_MODES.includes(
 			params.lightDirectionMode
 		)
 			? params.lightDirectionMode
 			: STUDIO_RENDER_DEFAULTS.lightDirectionMode;
+		params.splitMode = STUDIO_SPLIT_MODES.includes(
+			params.splitMode
+		)
+			? params.splitMode
+			: STUDIO_RENDER_DEFAULTS.splitMode;
 		params.instanceCount = Util.clamp(params.instanceCount, 1, 16);
 		params.instanceRotationMode = STUDIO_RENDER_INSTANCE_ROTATION_MODES.includes(
 			params.instanceRotationMode
@@ -660,6 +674,9 @@ export default class Mii {
 			query.delete('lightXDirection');
 			query.delete('lightYDirection');
 			query.delete('lightZDirection');
+		}
+		if (params.splitMode === 'none') {
+			query.delete('splitMode');
 		}
 
 		return `${STUDIO_RENDER_URL_BASE}?${query.toString()}`;

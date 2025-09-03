@@ -63,6 +63,7 @@ A JavaScript library used to interact with Mii data from the Wii U and 3DS
 		- [lightYDirection](#lightydirection)
 		- [lightZDirection](#lightzdirection)
 		- [lightDirectionMode](#lightdirectionmode)
+		- [splitMode](#splitMode)
 		- [instanceCount](#instancecount)
 		- [instanceRotationMode](#instancerotationmode)
 	- [Examples](#examples)
@@ -500,6 +501,22 @@ Default: `none`
 | `camera` | Unknown change? |
 | `offset` | Unknown change? |
 | `set`    | Unknown change? |
+
+### splitMode
+Changes the split depth mode
+
+Shows you the back or front halves of the head model. Useful for if you're drawing your own body, you can make sure the back half of e.g. the hair is drawn behind the body.
+
+When you pick `both`, the image is doubled vertically, and the back half is on top, the front half is on the bottom.
+
+Default: `none`
+
+| Value    | Description            |
+| -------- | ---------------        |
+| `none`   | Returns 400, ignored   |
+| `back`   | Shows back half        |
+| `front`  | Shows front half       |
+| `both`   | Shows both split modes |
 
 ### instanceCount
 How many renders are returned.
