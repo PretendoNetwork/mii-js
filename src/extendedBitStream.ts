@@ -1,7 +1,7 @@
+import { Buffer } from 'buffer';
 import { BitStream } from 'bit-buffer';
 
 export default class ExtendedBitStream extends BitStream {
-
 	constructor(buffer: Buffer) {
 		super(buffer, buffer.byteOffset, buffer.byteLength);
 	}
@@ -70,7 +70,6 @@ export default class ExtendedBitStream extends BitStream {
 		this.writeBits(bit, 1);
 	}
 
-
 	public writeBuffer(buffer: Buffer): void {
 		buffer.forEach(byte => this.writeUint8(byte));
 	}
@@ -79,7 +78,7 @@ export default class ExtendedBitStream extends BitStream {
 		const stringBuffer = Buffer.from(string, 'utf16le');
 		const terminatedBuffer = Buffer.alloc(0x14);
 
-		stringBuffer.copy(terminatedBuffer);
+		stringBuffer.set(terminatedBuffer);
 
 		this.writeBuffer(terminatedBuffer);
 	}

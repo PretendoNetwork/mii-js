@@ -19,4 +19,10 @@ export default class Util {
 		}
 		return Array.from({ length: end - start }, (_, i) => i + start);
 	}
+
+	public static assert(cond: any, message: string): void {
+		if (!cond) {
+			throw new Error(message);
+		}
+	}
 }

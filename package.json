@@ -1,27 +1,36 @@
 {
   "name": "@pretendonetwork/mii-js",
-  "version": "1.0.4",
-  "description": "",
-  "main": "dist/mii.js",
+  "version": "1.0.8",
+  "description": "A JavaScript library used to interact with Mii data from the Wii U and 3DS",
+  "type": "module",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "lint": "npx eslint .",
-    "build": "npm run lint && npm run clean && npx tsc && npx tsc-alias && npm run copy-files",
-    "clean": "npx rimraf ./dist",
-    "copy-files": "cp package.json dist/package.json && cp README.md dist/README.md"
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "tsup && tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/mii.d.ts",
+      "require": "./dist/mii.cjs",
+      "import": "./dist/mii.js"
+    }
   },
   "keywords": [],
-  "author": "",
   "license": "GNU AFFERO GPLV3",
   "dependencies": {
-    "bit-buffer": "^0.2.5"
+    "bit-buffer": "^0.2.5",
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
+    "@pretendonetwork/eslint-config": "^0.1.1",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.12.11",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
-    "eslint": "^8.56.0",
-    "rimraf": "^5.0.7",
-    "tsc-alias": "^1.8.10",
+    "eslint": "^9.19.0",
+    "tsup": "^8.3.5",
     "typescript": "5.3"
   }
 }

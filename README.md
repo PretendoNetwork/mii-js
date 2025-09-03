@@ -1,4 +1,7 @@
 # Mii JS
+
+[![NPM Version](https://img.shields.io/npm/v/%40pretendonetwork%2Fmii-js)](https://www.npmjs.com/package/@pretendonetwork/mii-js)
+
 A JavaScript library used to interact with Mii data from the Wii U and 3DS
 
 - [Mii JS](#mii-js)
