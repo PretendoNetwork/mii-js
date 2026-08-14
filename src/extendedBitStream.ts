@@ -78,7 +78,7 @@ export default class ExtendedBitStream extends BitStream {
 		const stringBuffer = Buffer.from(string, 'utf16le');
 		const terminatedBuffer = Buffer.alloc(0x14);
 
-		stringBuffer.set(terminatedBuffer);
+		terminatedBuffer.set(stringBuffer);
 
 		this.writeBuffer(terminatedBuffer);
 	}
